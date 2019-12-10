@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-container>
-   
-      <v-row fluid v-if="categories.length >0">
+      <v-row fluid v-if="categories.length > 0">
         <v-col v-for="cat in categories" :key="cat.id" cols="12" lg="3">
           <category :cat="cat"></category>
         </v-col>
@@ -25,10 +24,8 @@ export default {
   },
   asyncData({ params }) {
     return api.cats.getAllCats().then(res => {
-      
       return { categories: res.data };
     });
-   
   }
 };
 </script>

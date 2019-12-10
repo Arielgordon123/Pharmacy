@@ -1,10 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-btn v-for="item in items" :key="item.id" @click="showItem(item)" class="btn-category">
+        <v-col sm="4" md="3" lg="2" v-for="item in items" :key="item.id">
+      <v-btn @click="showItem(item)" class="btn-category" block>
         {{ item.name }}
       </v-btn>
-      
+      </v-col>
       <item v-model="dialog" v-if="!!current.serial" :item="current" />
     </v-row>
   </v-container>
