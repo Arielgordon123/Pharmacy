@@ -1,0 +1,26 @@
+{
+  "name": "pharmacy",
+  "version": "1.0.0",
+  "description": "My legendary Nuxt.js project",
+  "author": "ariel",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "cross-env": "^5.2.0",
+    "mongoose": "^5.7.14",
+    "now-builder": "^1.0.7",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
