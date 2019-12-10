@@ -29,7 +29,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
- plugins: ['~/api/init.js'],
+ plugins: ['~/api/init.js' ],
   /*
   ** Nuxt.js dev-modules
   */
@@ -46,6 +46,7 @@ module.exports = {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    ['@nuxtjs/google-tag-manager', { id: 'GTM-TD4TN4W' }],
   ],
   /*
   ** Axios module configuration
