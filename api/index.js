@@ -5,7 +5,9 @@ export default {
   },
   items: {
     getItemsByCatName: catName => axios.get("/api/items?cat=" + catName),
-    getItemById: id => axios.get("/api/items/" + id)
+    getItemById: id => axios.get("/api/items/" + id),
+    addItem: item => axios.post("/api/items", item ),
+    editItem: item => axios.patch("/api/items", item )
   },
   auth: {
     me: () => axios.get("/api/auth/user"),

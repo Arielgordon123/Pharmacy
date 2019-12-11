@@ -7,7 +7,7 @@ const ItemSchema = mongoose.Schema({
     serial: Number,
     authority:  String,
     category:  String,
-  
+    enCategory: String,
     neged:  String,
     imageUrl:  String
 

@@ -1,42 +1,64 @@
 <template>
-  <v-dialog v-model="show"  persistent max-width="500px">
-    <v-card v-if="item">
-      <!-- v-if="item != {}" -->
-      <!--  :img="item.imageUrl" contain -->
-      <v-card-actions style="float: left;">
-        
-        <v-btn text icon color="red" @click.stop="show = false"
-          ><v-icon>mdi-close-circle</v-icon></v-btn
+  <v-dialog v-model="show" persistent max-width="600px">
+    <v-form v-model="valid" ref="form">
+      <v-card v-if="item" style="padding: 10px;">
+        <v-card-actions style="float: left;">
+          <v-btn text icon color="red" @click.stop="show = false"
+            ><v-icon>mdi-close-circle</v-icon></v-btn
+          >
+        </v-card-actions>
+        <v-overflow-btn
+          :items="categoriesList"
+          item-text="name"
+          item-value="enName"
+          target="#dropdown-example"
+          :rules="[v => !!v || 'Please select Category name']"
+          required
+          v-model="item.enCategory"
+        ></v-overflow-btn>
+        <v-text-field
+          label="שם הפריט:"
+          hint="לדוגמה, משאף"
+          v-model="item.name"
+        ></v-text-field>
+
+        <v-text-field
+          label="סמכות:"
+          hint="לדוגמה, רופא"
+          v-model="item.authority"
+        ></v-text-field>
+
+        <v-text-field label="שם בפת״ר:" v-model="item.patarName"></v-text-field>
+
+        <v-text-field label="שם בסאפ:" v-model="item.sapName"></v-text-field>
+
+        <v-text-field label="התוויות נגד:" v-model="item.neged"></v-text-field>
+
+        <v-text-field label="מק״ט:" v-model="item.serial"></v-text-field>
+
+        <v-text-field label="תמונה:" v-model="item.imageUrl"></v-text-field>
+
+        <v-card-actions
+          v-if="$store.state.user && $store.state.user.role == 'admin'"
+          style="float: left;"
         >
-      </v-card-actions>
-      <h2>{{ item.name }}</h2>
-
-      <h4 class="item-title">סמכות:</h4>
-      {{ item.authority }}
-      <br />
-      <h4 class="item-title">שם בפת״ר:</h4>
-      <p class="pre-formatted">{{ patarName }}</p>
-
-      <h4 class="item-title">שם בסאפ:</h4>
-      <p class="pre-formatted">{{ sapName }}</p>
-      <h4 class="item-title">התוויות נגד:</h4>
-      {{ item.neged }} <br />
-
-      <h4 class="item-title">מק״ט:</h4>
-      {{ item.serial }}
-
-      <v-card-actions style="float: left;">
-          <v-btn color="red" @click.stop=""
-          >delete</v-btn
-        >
-         <v-btn v-if="$store.state.user && $store.state.user.role == 'admin'" color="green" @click.stop="editDoc(item)"
-          >save</v-btn
-        >
-      </v-card-actions>
-    </v-card>
+          <v-btn v-if="method == 'edit'" color="red" @click.stop=""
+            >delete</v-btn
+          >
+          <v-btn
+            color="green"
+            @click.stop="saveItem"
+            :loading="loading"
+            :disabled="!valid"
+            >save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-form>
   </v-dialog>
 </template>
 <script>
+import api from "~/api/";
 export default {
   props: {
     value: Boolean,
@@ -44,6 +66,16 @@ export default {
       type: Object,
       default: () => {
         return {};
+      }
+    },
+    method: {
+      type: String,
+      default: "edit"
+    },
+    categoriesList: {
+      type: Array,
+      default: () => {
+        return [];
       }
     }
   },
@@ -56,17 +88,36 @@ export default {
         this.$emit("input", value);
       }
     },
-    sapName() {
-      return this.item ? this.formatMinus(this.item.sapName) : "";
+    sapName: {
+      get() {
+        return this.item ? this.formatMinus(this.item.sapName) : "";
+      },
+      set(name) {
+        this.item.sapName = name;
+      }
     },
-    patarName() {
-      return this.item ? this.formatMinus(this.item.patarName) : "";
+    patarName: {
+      get() {
+        return this.item ? this.formatMinus(this.item.patarName) : "";
+      },
+      set(name) {
+        this.item.patarName = name;
+      }
     }
   },
   data() {
-    return {};
+    return {
+      loading: false,
+      valid: true
+    };
   },
   methods: {
+    validate() {
+      if (this.$refs.form.validate()) {
+        console.log("true :", true);
+        this.snackbar = true;
+      } else console.log("false :", false);
+    },
     formatMinus(name) {
       if (!name) return "";
       return name.replace(
@@ -75,8 +126,16 @@ export default {
 `
       );
     },
-    editDoc(item){
-      console.log('item :', item);
+    async saveItem() {
+      console.log("this.method :", this.method);
+      console.log("item :", this.item);
+      if (this.method == "new") {
+        await api.items.addItem(this.item);
+        this.$emit("input", false);
+      } else if (this.method == "edit") {
+        await api.items.editItem(this.item);
+        this.$emit("input", false);
+      }
     }
   }
 };

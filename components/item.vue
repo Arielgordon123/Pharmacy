@@ -42,7 +42,8 @@ export default {
       default: () => {
         return {};
       }
-    }
+    },
+     
   },
   computed: {
     show: {
@@ -73,7 +74,8 @@ export default {
       );
     },
     editDoc(item){
-      console.log('item :', item);
+      this.$emit("edit", item);
+      // console.log('item :', item);
     }
   }
 };
