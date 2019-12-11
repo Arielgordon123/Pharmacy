@@ -5,7 +5,7 @@ const Category = require("../../models/Category");
 const Item = require("../../models/Item");
 router.get("/", async (req, res) => {
   console.log("in route :");
-  const cats = await Category.find({}, { _id: 0, __v: 0 });
+  const cats = await Category.find({}, { __v: 0 });
   res.json(cats);
 
   //   const cat = new Category({

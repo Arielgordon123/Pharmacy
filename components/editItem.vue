@@ -1,12 +1,10 @@
 <template>
-  <v-dialog v-model="show" max-width="400px">
+  <v-dialog v-model="show"  persistent max-width="500px">
     <v-card v-if="item">
       <!-- v-if="item != {}" -->
       <!--  :img="item.imageUrl" contain -->
       <v-card-actions style="float: left;">
-         <v-btn v-if="$store.state.user && $store.state.user.role == 'admin'" text icon color="orange" @click.stop="editDoc(item)"
-          ><v-icon>mdi-content-save-edit-outline</v-icon></v-btn
-        >
+        
         <v-btn text icon color="red" @click.stop="show = false"
           ><v-icon>mdi-close-circle</v-icon></v-btn
         >
@@ -27,13 +25,18 @@
       <h4 class="item-title">מק״ט:</h4>
       {{ item.serial }}
 
-      <v-img :src="item.imageUrl" contain max-height="300px"></v-img>
+      <v-card-actions style="float: left;">
+          <v-btn color="red" @click.stop=""
+          >delete</v-btn
+        >
+         <v-btn v-if="$store.state.user && $store.state.user.role == 'admin'" color="green" @click.stop="editDoc(item)"
+          >save</v-btn
+        >
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
-
 <script>
-import api from "~/api/";
 export default {
   props: {
     value: Boolean,

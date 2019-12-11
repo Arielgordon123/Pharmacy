@@ -1,12 +1,13 @@
 <template>
   <v-container>
     <v-row>
-        <v-col sm="4" md="3" lg="2" v-for="item in items" :key="item.id">
-      <v-btn @click="showItem(item)" class="btn-category" block>
-        {{ item.name }}
-      </v-btn>
+      <v-col sm="4" md="3" lg="2" v-for="item in items" :key="item.id">
+        <v-btn @click="showItem(item)" class="btn-category" block>
+          {{ item.name }}
+        </v-btn>
       </v-col>
-      <item v-model="dialog" v-if="!!current.serial" :item="current" />
+
+      <edititem v-model="dialog" :item="current" />
     </v-row>
   </v-container>
 </template>
@@ -14,6 +15,8 @@
 <script>
 import api from "~/api/index";
 import item from "~/components/item";
+import edititem from "~/components/editItem";
+
 export default {
   props: {},
   data() {
@@ -22,7 +25,7 @@ export default {
       dialog: false
     };
   },
-  components: { item },
+  components: { item,edititem },
   asyncData({ params }) {
     console.log("params :", params);
     return api.items.getItemsByCatName(params.name).then(res => {
@@ -31,8 +34,13 @@ export default {
   },
   methods: {
     showItem(item) {
-      this.dialog = true;
-      this.current = item;
+      api.items.getItemById(item._id).then(res => {
+        this.current = res.data;
+        this.dialog = true;
+        console.log('res.data :', res.data);
+      });
+      console.log("item :", item);
+      
     }
   }
 };

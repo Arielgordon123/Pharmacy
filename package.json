@@ -11,17 +11,24 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@mdi/js": "^4.7.95",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/google-tag-manager": "^2.3.1",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "@nuxtjs/vuetify": "^1.0.0",
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "consola": "^2.11.0",
+    "cookie": "^0.4.0",
     "cross-env": "^5.2.0",
+    "js-cookie": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.14",
     "now-builder": "^1.0.7",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
     "nodemon": "^2.0.1"
   }
 }

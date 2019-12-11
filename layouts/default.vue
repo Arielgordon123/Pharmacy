@@ -12,7 +12,7 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in menuList"
           :key="i"
           :to="item.to"
           @click="drawer = false"
@@ -45,6 +45,9 @@
         </div>
         <v-btn icon @click="openSearch" v-else>
           <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-btn v-if="this.$store.state.user" icon @click="logout">
+          <v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-app-bar>
     </v-card>
@@ -88,7 +91,55 @@ export default {
   methods: {
     openSearch() {
       this.search = !this.search;
+    },
+    logout() {
+      this.$store.dispatch("reset").then(() => {
+        this.$router.push("/");
+      });
     }
+  },
+  computed: {
+    isLogedIn() {
+      return this.$store.state.user;
+    },
+    role() {
+      return this.$store.state.user.role
+    },
+    menuList: {
+      get() {
+        
+        if (this.isLogedIn) {
+          this.items = this.items.filter(item => {
+            return item.title != "התחברות";
+          });
+          if(this.role == "admin"){
+             this.items.push({
+          icon: "mdi-settings-outline",
+          title: "ניהול",
+          to: "/admin"
+        });
+          }
+        } else {
+           this.items.push({
+          icon: "mdi-login",
+          title: "התחברות",
+          to: "/auth/login"
+        });
+          this.items = this.items.filter(item => {
+            return item.title != "ניהול" 
+          });
+         
+         
+        }
+        
+        return this.items;
+      },
+      set(item) {
+        this.items.push(item);
+      }
+    }
+  },
+  mounted() {
   }
 };
 </script>
