@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="3">
+      <v-col sm="12" md="3">
         <v-card to="/categories">
           <v-img
             src="/pills.jpg"
@@ -16,15 +16,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
-        <!-- <v-card to="/categories">
-          <v-card-text >
-             קטגוריות
-          </v-card-text>
-          חיפוש לפי קטגוריה
-          
-        </v-card> -->
-      </v-col>
+     
     </v-row>
   </v-container>
 </template>
