@@ -40,7 +40,7 @@ module.exports = {
   plugins: ["~/api/init.js"],
 
   router: {
-    middleware: ['authenticate'] //
+    middleware: ["authenticate"] //
   },
   /*
    ** Nuxt.js dev-modules
@@ -62,6 +62,19 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  pwa: {
+    icon: {
+      /* icon options */
+      iconSrc: "./static/icon.png"
+    },
+    manifest: {
+      short_name: "makat",
+      name: "חיפוש מקטים",
+      start_url: "/",
+      theme_color: "#202225",
+      lang: "he"
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

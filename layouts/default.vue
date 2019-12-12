@@ -1,6 +1,7 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
+
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -31,7 +32,7 @@
 
     <v-card color="grey lighten-4" flat>
       <v-app-bar :clipped-left="clipped" fixed app>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-app-bar-nav-icon aria-label="Menu" @click.stop="drawer = !drawer" />
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div class="search-box" v-if="search">
@@ -43,10 +44,10 @@
             @blur="search = false"
           ></v-text-field>
         </div>
-        <v-btn icon @click="openSearch" v-else>
+        <v-btn icon @click="openSearch" aria-label="Search" v-else>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn v-if="this.$store.state.user" icon @click="logout">
+        <v-btn v-if="this.$store.state.user" aria-label="Logout" icon @click="logout">
           <v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-app-bar>
