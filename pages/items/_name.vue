@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col sm="4" md="3" lg="2" v-for="item in items" :key="item.id">
+    <v-row v-if="$store.state.items.length > 0">
+      <v-col sm="4" md="3" lg="2" v-for="item in $store.state.items" :key="item.id">
         <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
         </v-btn>
@@ -51,11 +51,12 @@ export default {
     };
   },
   components: { item, edititem },
-  asyncData({ params }) {
+  asyncData({ params, store }) {
     console.log("params :", params);
-    return api.items.getItemsByCatName(params.name).then(res => {
-      return { items: res.data };
-    });
+    // api.items.getItemsByCatName(params.name).then(res => {
+    //   return { items: res.data };
+    // });
+    return store.dispatch('getItemsByCatName', params.name)
   },
 
   methods: {

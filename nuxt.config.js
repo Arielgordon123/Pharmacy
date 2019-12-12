@@ -37,7 +37,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~/api/init.js"],
+  plugins: ["~/api/init.js", '~/plugins/pwa.client.js'],
 
   router: {
     middleware: ["authenticate"] //

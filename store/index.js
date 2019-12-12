@@ -14,6 +14,7 @@ export const state = () => ({
   user: null,
   token: null,
   categories: [],
+  items: [],
   refresh_token: null
 });
 
@@ -29,6 +30,9 @@ export const getters = {
   },
   get_categories(state) {
     return state.categories;
+  },
+  get_items(state) {
+    return state.items;
   }
 };
 export const computed = {
@@ -56,10 +60,23 @@ export const mutations = {
   },
   set_categories(store, categories) {
     store.categories = categories;
-  }
+  },
+  set_items(store, items) {
+    store.items = items;
+  },
 };
 
 export const actions = {
+  getItemsByCatName({ dispatch, commit }, catName) {
+    console.log('in store catName:', catName);
+    return api.items.getItemsByCatName(catName)
+      .then(res => {
+        commit("set_items", res.data);
+      })
+      .catch(err => {
+        return Promise.reject(new Error("cant get items"));
+      });
+  },
   getAllCategories({ dispatch, commit }) {
     return api.cats
       .getAllCats()
@@ -191,20 +208,5 @@ export const actions = {
 
     return Promise.resolve();
   },
-  GetNews({ commit }, payload) {
-    console.log("SET_LOADING true , payload:", payload);
-    commit("SET_LOADING", true);
-    this.$axios
-      .$get("/api/data/news/" + payload)
-      .then(res => {
-        commit("SET_NEWS", res.articles);
-      })
-      .catch(error => {
-        console.error(error);
-      })
-      .finally(() => {
-        console.log("SET_LOADING false :");
-        commit("SET_LOADING", false);
-      });
-  }
+
 };
