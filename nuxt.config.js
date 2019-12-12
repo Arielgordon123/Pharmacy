@@ -70,7 +70,7 @@ module.exports = {
     manifest: {
       short_name: "makat",
       name: "חיפוש מקטים",
-      start_url: "/",
+      start_url: "/?utm_source=homescreen",
       theme_color: "#202225",
       lang: "he"
     }
