@@ -1,7 +1,6 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -36,18 +35,24 @@
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div class="search-box" v-if="search">
-          <v-text-field
+          <!-- <v-text-field
             label="Solo"
             v-model="searchText"
             solo
             width="10rm"
             @blur="search = false"
-          ></v-text-field>
+          ></v-text-field> -->
+          <search v-model="search" />
         </div>
         <v-btn icon @click="openSearch" aria-label="Search" v-else>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn v-if="this.$store.state.user" aria-label="Logout" icon @click="logout">
+        <v-btn
+          v-if="this.$store.state.user"
+          aria-label="Logout"
+          icon
+          @click="logout"
+        >
           <v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-app-bar>
@@ -65,7 +70,11 @@
 </template>
 
 <script>
+import search from "~/components/search";
 export default {
+  components: {
+    search
+  },
   data() {
     return {
       clipped: false,
@@ -86,7 +95,7 @@ export default {
         // }
       ],
       miniVariant: false,
-      title: "שם"
+      title: "מקטלוג"
     };
   },
   methods: {
@@ -104,35 +113,32 @@ export default {
       return this.$store.state.user;
     },
     role() {
-      return this.$store.state.user.role
+      return this.$store.state.user.role;
     },
     menuList: {
       get() {
-        
         if (this.isLogedIn) {
           this.items = this.items.filter(item => {
             return item.title != "התחברות";
           });
-          if(this.role == "admin"){
-             this.items.push({
-          icon: "mdi-settings-outline",
-          title: "ניהול",
-          to: "/admin"
-        });
+          if (this.role == "admin") {
+            this.items.push({
+              icon: "mdi-settings-outline",
+              title: "ניהול",
+              to: "/admin"
+            });
           }
         } else {
-           this.items.push({
-          icon: "mdi-login",
-          title: "התחברות",
-          to: "/auth/login"
-        });
-          this.items = this.items.filter(item => {
-            return item.title != "ניהול" 
+          this.items.push({
+            icon: "mdi-login",
+            title: "התחברות",
+            to: "/auth/login"
           });
-         
-         
+          this.items = this.items.filter(item => {
+            return item.title != "ניהול";
+          });
         }
-        
+
         return this.items;
       },
       set(item) {
@@ -140,13 +146,12 @@ export default {
       }
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 <style>
 .search-box {
-  margin: 36px 20px 0 0;
+  /* margin: 36px 20px 0 0; */
   float: left;
 }
 </style>

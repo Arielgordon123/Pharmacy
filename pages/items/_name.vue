@@ -1,7 +1,13 @@
 <template>
   <v-container>
     <v-row v-if="$store.state.items.length > 0">
-      <v-col sm="4" md="3" lg="2" v-for="item in $store.state.items" :key="item.id">
+      <v-col
+        sm="4"
+        md="3"
+        lg="2"
+        v-for="item in $store.state.items"
+        :key="item.id"
+      >
         <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
         </v-btn>
@@ -17,7 +23,15 @@
         @input="clearEdit"
       />
     </v-row>
-    <v-card v-if="!dialog && !addDialog" @click="addNewItem">
+    <v-card
+      v-if="
+        $store.state.user &&
+          $store.state.user.role == 'admin' &&
+          !dialog &&
+          !addDialog
+      "
+      @click="addNewItem"
+    >
       <v-btn
         color="blue"
         dark
@@ -56,7 +70,7 @@ export default {
     // api.items.getItemsByCatName(params.name).then(res => {
     //   return { items: res.data };
     // });
-    return store.dispatch('getItemsByCatName', params.name)
+    return store.dispatch("getItemsByCatName", params.name);
   },
 
   methods: {

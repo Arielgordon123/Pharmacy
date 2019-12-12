@@ -15,6 +15,7 @@ export const state = () => ({
   token: null,
   categories: [],
   items: [],
+  item: null,
   refresh_token: null
 });
 
@@ -33,6 +34,9 @@ export const getters = {
   },
   get_items(state) {
     return state.items;
+  },
+  get_item(state) {
+    return state.item;
   }
 };
 export const computed = {
@@ -64,9 +68,21 @@ export const mutations = {
   set_items(store, items) {
     store.items = items;
   },
+  set_item(store, item) {
+    store.item = item;
+  },
 };
 
 export const actions = {
+  getItemById({ dispatch, commit }, id) {
+    return api.items.getItemById(id)
+      .then(res => {
+        commit("set_item", res.data);
+      })
+      .catch(err => {
+        return Promise.reject(new Error("cant get item"));
+      });
+  },
   getItemsByCatName({ dispatch, commit }, catName) {
     console.log('in store catName:', catName);
     return api.items.getItemsByCatName(catName)

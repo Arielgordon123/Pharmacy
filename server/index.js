@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const categoryHandler = require("./api/categories/index");
 const itemsHandler = require("./api/items/index");
+const searchHandler = require('./api/searchHandler')
 // Import and Set Nuxt.js options
 const config = require("../nuxt.config.js");
 config.dev = process.env.NODE_ENV !== "production";
@@ -43,7 +44,7 @@ async function start() {
 
   // parse application/json
   app.use(bodyParser.json());
-
+  app.use("/api/search", searchHandler);
   app.use("/api/auth", auth());
   app.use("/api/items", itemsHandler);
   app.use("/api/categories", categoryHandler);
