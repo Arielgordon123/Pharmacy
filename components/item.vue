@@ -21,8 +21,8 @@
 
       <h4 class="item-title">שם בסאפ:</h4>
       <p class="pre-formatted">{{ sapName }}</p>
-      <h4 class="item-title">התוויות נגד:</h4>
-      {{ item.neged }} <br />
+      <h4 v-if="item.neged" class="item-title">התוויות נגד:</h4>
+      {{ item.neged ? item.neged : "" }} <br />
 
       <h4 class="item-title">מק״ט:</h4>
       {{ item.serial }}
