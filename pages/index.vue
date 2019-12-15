@@ -12,7 +12,7 @@
             <v-card-title> קטגוריות</v-card-title>
           </v-img>
           <v-card-text>
-            חיפוש לפי קטגוריה
+             רשימת קטגוריות
           </v-card-text>
         </v-card>
       </v-col>

@@ -51,7 +51,8 @@ export default {
         return this.value;
       },
       set(value) {
-        this.$emit("input", value);
+        this.$store.commit('set_searchDialog', value)
+        // this.$emit("input", value);
       }
     },
     sapName() {

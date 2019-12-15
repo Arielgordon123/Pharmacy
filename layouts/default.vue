@@ -42,7 +42,7 @@
             width="10rm"
             @blur="search = false"
           ></v-text-field> -->
-          <search v-model="search" />
+          <search v-model="search"/>
         </div>
         <v-btn icon @click="openSearch" aria-label="Search" v-else>
           <v-icon>mdi-magnify</v-icon>
@@ -60,6 +60,17 @@
     <v-content>
       <v-container>
         <nuxt />
+        <client-only>
+        <item v-model="$store.state.searchDialog" :item="$store.state.item" @edit="editItem" />
+        <edititem
+        v-if="itemToEdit && $store.state.user.role == 'admin'"
+        v-model="addDialog"
+        :categoriesList="getCategories"
+        :item="itemToEdit"
+        :method="method"
+        @input="clearEdit"
+      />
+        </client-only>
       </v-container>
     </v-content>
 
@@ -71,9 +82,13 @@
 
 <script>
 import search from "~/components/search";
+import item from '~/components/item'
+import edititem from "~/components/editItem";
 export default {
   components: {
-    search
+    search,
+    item,
+    edititem
   },
   data() {
     return {
@@ -81,6 +96,11 @@ export default {
       drawer: false,
       fixed: false,
       search: false,
+      dialog: false,
+      itemToEdit: null,
+      addDialog: false,
+      method: "new",
+      categories: [],
       searchText: "",
       items: [
         {
@@ -106,9 +126,36 @@ export default {
       this.$store.dispatch("reset").then(() => {
         this.$router.push("/");
       });
-    }
+    },
+    editItem(item) {
+      this.method = "edit";
+      
+      this.itemToEdit = item;
+      this.addDialog = true;
+    },
+    clearEdit() {
+      // console.log('clear edit');
+      this.itemToEdit = null;
+      this.addDialog = false;
+    },
+     fillCategory() {
+       console.log('call to fill category:');
+      if (this.$store.getters.get_categories.length == 0) {
+
+        this.$store.dispatch("getAllCategories");
+      }
+      // let categories = this.$store.state.categories;
+
+      // categories = categories.reduce((acc, item) => {
+      //   acc.push({ name: item.name, enName: item.enName });
+      //   return acc;
+      // }, []);
+    },
   },
   computed: {
+    getCategories() {
+      return this.$store.getters.get_categories;
+    },
     isLogedIn() {
       return this.$store.state.user;
     },
@@ -146,7 +193,9 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+    this.fillCategory()
+  }
 };
 </script>
 <style>

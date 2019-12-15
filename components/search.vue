@@ -16,6 +16,7 @@
       label="Search"
       solo
       ref="searchBox"
+      @keyup.enter="enter"
       @blur="show = false"
     >
       <template v-slot:no-data>
@@ -47,15 +48,13 @@
 <script>
 import api from "~/api/index";
 export default {
- 
   props: ["value"],
   data: () => ({
     isLoading: false,
     searchItems: [],
     model: null,
     search: null,
-    tab: null,
-  
+    tab: null
   }),
   computed: {
     show: {
@@ -70,11 +69,19 @@ export default {
   },
   methods: {
     searchItemClick(id) {
-        this.$router.push('/item/'+id) 
-    //   api.items.getItemById(id).then(res => {
-    //     this.currentItem = res.data;
-    //     this.itemDialog = true;
-    //   });
+      this.$store.dispatch('getItemById', id)
+      // this.$emit('showItem', id)
+      // this.$router.push("/item/" + id);
+      //   api.items.getItemById(id).then(res => {
+      //     this.currentItem = res.data;
+      //     this.itemDialog = true;
+      //   });
+    },
+    enter() {
+      if (this.model) {
+        // this.$router.push("/item/" + this.model);
+        // this.$emit('showItem', this.model)
+      }
     }
   },
 

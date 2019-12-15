@@ -6,7 +6,7 @@ const Item = require("../../models/Item");
 
 router.get("/", async (req, res) => {
   console.log("in route :", req.query.cat);
-  const items = await Item.find({ enCategory: req.query.cat }, "_id name");
+  const items = await Item.find({ enCategory: req.query.cat }, "_id name imageUrl");
 
   res.json(items);
 });

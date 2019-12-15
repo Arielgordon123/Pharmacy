@@ -36,8 +36,8 @@
 
         <v-text-field label="מק״ט:" v-model="item.serial"></v-text-field>
 
-        <v-text-field label="תמונה:" v-model="item.imageUrl"></v-text-field>
-
+        <!-- <v-text-field label="תמונה:" v-model="item.imageUrl"></v-text-field> -->
+        <uploadImage @uploaded="saveUrl" />
         <v-card-actions
           v-if="$store.state.user && $store.state.user.role == 'admin'"
           style="float: left;"
@@ -59,7 +59,11 @@
 </template>
 <script>
 import api from "~/api/";
+import uploadImage from "~/components/uploadImage";
 export default {
+  components: {
+    uploadImage
+  },
   props: {
     value: Boolean,
     item: {
@@ -126,10 +130,14 @@ export default {
 `
       );
     },
+    saveUrl(url) {
+      this.item.imageUrl = url;
+    },
     async saveItem() {
       console.log("this.method :", this.method);
       console.log("item :", this.item);
       if (this.method == "new") {
+        // console.log("this.item :", this.item);
         await api.items.addItem(this.item);
         this.$emit("input", false);
       } else if (this.method == "edit") {

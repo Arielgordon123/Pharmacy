@@ -1,5 +1,5 @@
 import cookie from "cookie";
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 import * as Ccookie from "js-cookie";
 import api from "~/api";
 
@@ -16,6 +16,7 @@ export const state = () => ({
   categories: [],
   items: [],
   item: null,
+  searchDialog: false,
   refresh_token: null
 });
 
@@ -37,6 +38,9 @@ export const getters = {
   },
   get_item(state) {
     return state.item;
+  },
+  get_searchDialog(state) {
+    return state.searchDialog;
   }
 };
 export const computed = {
@@ -71,21 +75,28 @@ export const mutations = {
   set_item(store, item) {
     store.item = item;
   },
+  set_searchDialog(store, value) {
+    store.searchDialog = value;
+  }
 };
 
 export const actions = {
   getItemById({ dispatch, commit }, id) {
-    return api.items.getItemById(id)
+    return api.items
+      .getItemById(id)
       .then(res => {
         commit("set_item", res.data);
+        commit("set_searchDialog", true)
       })
       .catch(err => {
         return Promise.reject(new Error("cant get item"));
       });
   },
+
   getItemsByCatName({ dispatch, commit }, catName) {
-    console.log('in store catName:', catName);
-    return api.items.getItemsByCatName(catName)
+    // console.log("in store catName:", catName);
+    return api.items
+      .getItemsByCatName(catName)
       .then(res => {
         commit("set_items", res.data);
       })
@@ -223,6 +234,5 @@ export const actions = {
     }
 
     return Promise.resolve();
-  },
-
+  }
 };

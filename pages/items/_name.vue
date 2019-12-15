@@ -8,12 +8,19 @@
         v-for="item in $store.state.items"
         :key="item.id"
       >
-        <v-btn @click="showItem(item)" class="btn-category" block>
+        <!-- <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
-        </v-btn>
+        </v-btn> -->
+        <v-card  @click="showItem(item)">
+          <v-img :src="item.imageUrl">
+              <v-card-text>
+                 {{ item.name }}
+              </v-card-text>
+          </v-img>
+        </v-card>
       </v-col>
 
-      <item v-model="dialog" :item="current" @edit="editItem" />
+      <!-- <item v-model="dialog" :item="current" @edit="editItem" /> -->
       <edititem
         v-if="itemToEdit"
         v-model="addDialog"
@@ -66,7 +73,7 @@ export default {
   },
   components: { item, edititem },
   asyncData({ params, store }) {
-    console.log("params :", params);
+    // console.log("params :", params);
     // api.items.getItemsByCatName(params.name).then(res => {
     //   return { items: res.data };
     // });
@@ -75,11 +82,14 @@ export default {
 
   methods: {
     showItem(item) {
-      api.items.getItemById(item._id).then(res => {
-        this.current = res.data;
-        this.dialog = true;
-        // console.log('res.data :', res.data);
-      });
+      this.$store.dispatch('getItemById', item._id)
+
+      // this.$emit('showItem', item._id)
+      // api.items.getItemById(item._id).then(res => {
+      //   this.current = res.data;
+      //   this.dialog = true;
+      //   // console.log('res.data :', res.data);
+      // });
       // console.log("item :", item);
     },
     editItem(item) {
@@ -93,21 +103,21 @@ export default {
       this.itemToEdit = null;
       this.addDialog = false;
     },
-    fillCategory() {
-      console.log(
-        "this.$store.getters.get_categories.length :",
-        this.$store.getters.get_categories.length
-      );
-      if (this.$store.getters.get_categories.length == 0) {
-        this.$store.dispatch("getAllCategories");
-      }
-      let categories = this.$store.state.categories;
+    // fillCategory() {
+    //   console.log(
+    //     "this.$store.getters.get_categories.length :",
+    //     this.$store.getters.get_categories.length
+    //   );
+    //   if (this.$store.getters.get_categories.length == 0) {
+    //     this.$store.dispatch("getAllCategories");
+    //   }
+    //   let categories = this.$store.state.categories;
 
-      categories = categories.reduce((acc, item) => {
-        acc.push({ name: item.name, enName: item.enName });
-        return acc;
-      }, []);
-    },
+    //   categories = categories.reduce((acc, item) => {
+    //     acc.push({ name: item.name, enName: item.enName });
+    //     return acc;
+    //   }, []);
+    // },
 
     addNewItem() {
       this.categories = this.getCategories;
@@ -121,7 +131,7 @@ export default {
     }
   },
   created() {
-    this.fillCategory();
+    // this.fillCategory();
   }
 };
 </script>
