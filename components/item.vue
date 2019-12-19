@@ -13,13 +13,13 @@
       </v-card-actions>
       <h2>{{ item.name }}</h2>
 
-      <h4 class="item-title">סמכות:</h4>
-      {{ item.authority }}
+      <h4 v-if="item.authority" class="item-title">סמכות:</h4>
+      {{ item.authority ? item.authority : "" }}
       <br />
-      <h4 class="item-title">שם בפת״ר:</h4>
+      <h4 v-if="patarName" class="item-title">שם בפת״ר:</h4>
       <p class="pre-formatted">{{ patarName }}</p>
 
-      <h4 class="item-title">שם בסאפ:</h4>
+      <h4 v-if="sapName" class="item-title">שם בסאפ:</h4>
       <p class="pre-formatted">{{ sapName }}</p>
       <h4 v-if="item.neged" class="item-title">התוויות נגד:</h4>
       {{ item.neged ? item.neged : "" }} <br />
