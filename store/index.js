@@ -77,7 +77,15 @@ export const mutations = {
   },
   set_searchDialog(store, value) {
     store.searchDialog = value;
-  }
+  },
+  addCategory(store, {_id, name, enName}) {
+    store.categories.push({_id,name,enName});
+  },
+  deleteItem(store, id) {
+    store.items = store.items.filter(item=> item._id != id)
+    store.item = null
+    store.searchDialog = false
+  },
 };
 
 export const actions = {

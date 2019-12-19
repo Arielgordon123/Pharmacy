@@ -21,37 +21,16 @@
       </v-col>
 
       <!-- <item v-model="dialog" :item="current" @edit="editItem" /> -->
-      <edititem
-        v-if="itemToEdit"
-        v-model="addDialog"
-        :categoriesList="categories"
-        :item="itemToEdit"
-        :method="method"
-        @input="clearEdit"
-      />
     </v-row>
-    <v-card
-      v-if="
-        $store.state.user &&
-          $store.state.user.role == 'admin' &&
-          !dialog &&
-          !addDialog
-      "
-      @click="addNewItem"
-    >
-      <v-btn
-        color="blue"
-        dark
-        small
-        fixed
-        bottom
-        left
-        fab
-        style="margin-bottom: 30px;"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-card>
+    <edititem
+      v-if="itemToEdit"
+      v-model="addDialog"
+      :categoriesList="categories"
+      :item="itemToEdit"
+      :method="method"
+      @input="clearEdit"
+    />
+    <addBtn @click="addNewItem" :dialog="dialog" :addDialog="addDialog" />
   </v-container>
 </template>
 
@@ -59,6 +38,8 @@
 import api from "~/api/index";
 import item from "~/components/item";
 import edititem from "~/components/editItem";
+import addBtn from "~/components/addBtn";
+
 export default {
   props: {},
   data() {
@@ -71,13 +52,15 @@ export default {
       method: "new"
     };
   },
-  components: { item, edititem },
+  components: { item, edititem, addBtn },
   asyncData({ params, store }) {
     // console.log("params :", params);
     // api.items.getItemsByCatName(params.name).then(res => {
     //   return { items: res.data };
     // });
-    return store.dispatch("getItemsByCatName", params.name);
+    return store.dispatch("getItemsByCatName", params.name).catch(err=>{
+      console.log('err :', err);
+    });
   },
 
   methods: {

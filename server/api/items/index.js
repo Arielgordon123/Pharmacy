@@ -6,9 +6,17 @@ const Item = require("../../models/Item");
 
 router.get("/", async (req, res) => {
   console.log("in route :", req.query.cat);
-  const items = await Item.find({ enCategory: req.query.cat }, "_id name imageUrl");
-
-  res.json(items);
+  Category.findOne({ enName: req.query.cat }).then(category => {
+    if (category) {
+      Item.find({ enCategory: req.query.cat , deleted: false }, "_id name imageUrl").then(
+        items => {
+          res.json(items);
+        }
+      );
+    } else {
+      res.status(400).json({ msg: "cat not exists" });
+    }
+  });
 });
 
 router.get("/:id", async (req, res) => {
@@ -17,6 +25,16 @@ router.get("/:id", async (req, res) => {
 
   res.json(items);
 });
+
+router.delete("/:id", async (req, res) => {
+ 
+  Item.updateOne({ _id: req.params.id }, {deleted: true}).then(()=>{
+    res.status(204).json({msg:"resource deleted successfully"});
+  })
+
+ 
+});
+
 router.post("/", async (req, res) => {
   console.log("in route add new item:", req.body.name);
   const item = new Item({
@@ -56,7 +74,7 @@ router.patch("/", async (req, res) => {
     }
   ).then(it => {
     res.status(201).json({ msg: "updated" });
-  });;
+  });
 
   // item.save().then(it=>{
   //   res.status(201).json({msg: "created"})

@@ -42,7 +42,7 @@
           v-if="$store.state.user && $store.state.user.role == 'admin'"
           style="float: left;"
         >
-          <v-btn v-if="method == 'edit'" color="red" @click.stop=""
+          <v-btn v-if="method == 'edit'" color="red" @click.stop="deleteItem"
             >delete</v-btn
           >
           <v-btn
@@ -144,6 +144,14 @@ export default {
         await api.items.editItem(this.item);
         this.$emit("input", false);
       }
+    },
+    deleteItem() {
+      const id = this.item._id;
+
+      this.show = false;
+      api.items.deleteItem(id).then(() => {
+        this.$store.commit("deleteItem", id);
+      });
     }
   }
 };

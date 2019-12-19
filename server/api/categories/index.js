@@ -20,6 +20,16 @@ router.get("/", async (req, res) => {
   //     });
   //   res.send("OK")
 });
+router.post("/", async (req, res) => {
+  console.log("in route add new cat:", req.body.name);
+   const cat = new Category({
+      name: req.body.name,
+      enName: req.body.enName
+    });
 
+    cat.save().then(category => {
+    res.status(201).json({ msg: "category created",item:category });
+  });
+});
 
 module.exports = router;
