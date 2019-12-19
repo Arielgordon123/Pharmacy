@@ -3,11 +3,12 @@ export default ({ app }, inject) => {
   // console.log('app :', app.$gtm.pushEvent({ event: 'myEvent' }));
   window.addEventListener("beforeinstallprompt", e => {
     console.log("beforeinstallprompt");
-    console.log(e)
     e.userChoice.then(choiceResult => {
       console.log("choiceResult :", choiceResult);
       //   ga("send", "event", "A2H", choiceResult.outcome);
       app.$gtm.pushEvent({ event: "A2H", ...choiceResult.outcome });
+    }).catch(err=>{
+      console.log('err :', err);
     });
   });
 };
