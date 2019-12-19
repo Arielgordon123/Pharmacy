@@ -11,11 +11,11 @@
         <!-- <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
         </v-btn> -->
-        <v-card  @click="showItem(item)">
+        <v-card v-if="item.imageUrl" @click="showItem(item)">
           <v-img :src="item.imageUrl">
-              <v-card-text>
-                 {{ item.name }}
-              </v-card-text>
+            <v-card-text>
+              {{ item.name }}
+            </v-card-text>
           </v-img>
         </v-card>
       </v-col>
@@ -82,7 +82,7 @@ export default {
 
   methods: {
     showItem(item) {
-      this.$store.dispatch('getItemById', item._id)
+      this.$store.dispatch("getItemById", item._id);
 
       // this.$emit('showItem', item._id)
       // api.items.getItemById(item._id).then(res => {
