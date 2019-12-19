@@ -11,8 +11,8 @@
         <!-- <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
         </v-btn> -->
-        <v-card v-if="item.imageUrl" @click="showItem(item)">
-          <v-img :src="item.imageUrl">
+        <v-card @click="showItem(item)">
+          <v-img :src="item.imageUrl || ''">
             <v-card-text>
               {{ item.name }}
             </v-card-text>
