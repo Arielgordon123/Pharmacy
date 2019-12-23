@@ -76,47 +76,54 @@ const userValidation = (req, res, next) => {
   }
 };
 
-const tokenGenerator = (jwt, id, email,role, uid, name) => {
+const tokenGenerator = (jwt, id, email, role, uid, name) => {
   return jwt.sign(
-    { id, email,role, uid, name },
+    { id, email, role, uid, name },
     privateKey,
     { algorithm: "RS256", expiresIn: 60 * 60 * 24 * 7 } // 7 days
   );
 };
 
-const Login = ( email, password) => {
+const Login = (email, password) => {
   return new Promise((resolve, reject) => {
-    console.log('email :', email);
-    User.findOne({
-      "email": email
-    },{})
+    console.log("email :", email);
+    User.findOne(
+      {
+        email: email
+      },
+      {}
+    )
       .then(user => {
-       
-        if (user == null)
-          reject(new Error("user or password wrong"));
-       console.log('results :', user);
-      
+        if (user == null) reject(new Error("user or password wrong"));
+        console.log("results :", user);
+
         bcrypt
           .compare(password, user.hashedPassword)
           .then(result => {
             if (result) {
-              let uid = uuidv4(); // generate random User Id
-              let date = new Date();
-              let token = tokenGenerator(
-                jwt,
-                user.id,
-                user.email,
-                user.role,
-                uid,
-                user.fullName
-              );
-              resolve({
-                type: 'success',
-                message: 'User logged in.',
-                //  user: { id: user.id, email: user.email, jwtid: uid },
-                token: 'Baerer-' + token,
-               
-              })
+              User.updateOne(
+                {
+                  email: email
+                },
+                { lastLogin: Date.now() }
+              ).then(() => {
+                let uid = uuidv4(); // generate random User Id
+                let date = new Date();
+                let token = tokenGenerator(
+                  jwt,
+                  user.id,
+                  user.email,
+                  user.role,
+                  uid,
+                  user.fullName
+                );
+                resolve({
+                  type: "success",
+                  message: "User logged in.",
+                  //  user: { id: user.id, email: user.email, jwtid: uid },
+                  token: "Baerer-" + token
+                });
+              });
             } else {
               reject({ type: "error", message: "user or password wrong" });
             }

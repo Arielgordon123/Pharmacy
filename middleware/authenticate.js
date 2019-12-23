@@ -3,7 +3,7 @@ const cookie = require("js-cookie");
 export default function({ store, redirect, route }) {
   const userIsLoggedIn = !!store.state.user;
   const role = store.state.user ? store.state.user.role : "";
-  const urlRequiresAuth = /^\/admin(\/|$)/.test(route.fullPath);
+  const urlRequiresAuth = /^\/admin|\/categories|\/items(\/|$)/.test(route.fullPath);
   const urlRequiresAdminAuth = /^\/admin(\/|$)/.test(route.fullPath);
   const urlRequiresNonAuth = /^\/auth|\/login(\/|$)/.test(route.fullPath);
   //  console.log('userIsLoggedIn,urlRequiresAuth,urlRequiresNonAuth :', userIsLoggedIn,urlRequiresAuth,urlRequiresNonAuth)

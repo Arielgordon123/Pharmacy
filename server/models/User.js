@@ -16,6 +16,14 @@ const UserSchema = mongoose.Schema({
     required: true,
     
   },
+  lastLogin: {
+    type: Date,
+    default: Date.now()
+  },
+  created: {
+    type: Date,
+    default: Date.now()
+  },
   refreshToken: String,
   role: { type: String, default: "viewer" }
 });

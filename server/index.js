@@ -9,6 +9,9 @@ const mongoose = require("mongoose");
 const categoryHandler = require("./api/categories/index");
 const itemsHandler = require("./api/items/index");
 const searchHandler = require('./api/searchHandler')
+const identityService = require('./service/identityService')
+
+const admin = require('./api/admin/index')
 // Import and Set Nuxt.js options
 const config = require("../nuxt.config.js");
 config.dev = process.env.NODE_ENV !== "production";
@@ -44,10 +47,11 @@ async function start() {
 
   // parse application/json
   app.use(bodyParser.json());
-  app.use("/api/search", searchHandler);
+  app.use("/api/search", identityService.userValidation, searchHandler);
   app.use("/api/auth", auth());
-  app.use("/api/items", itemsHandler);
-  app.use("/api/categories", categoryHandler);
+  app.use("/api/items",identityService.userValidation, itemsHandler);
+  app.use("/api/categories",identityService.userValidation, categoryHandler);
+  app.use("/api/admin",identityService.userValidation, admin);
   // Give nuxt middleware to express
   app.use(nuxt.render);
 

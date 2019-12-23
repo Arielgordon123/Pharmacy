@@ -12,6 +12,7 @@ import {
 
 export const state = () => ({
   user: null,
+  usersList: [],
   token: null,
   categories: [],
   items: [],
@@ -41,12 +42,15 @@ export const getters = {
   },
   get_searchDialog(state) {
     return state.searchDialog;
+  },
+  get_users(state){
+    return state.usersList;
   }
 };
 export const computed = {
   // mix the getters into computed with object spread operator
   ...mapGetters([
-    "get_categories"
+    "get_categories",
     // ...
   ])
 };
@@ -77,6 +81,9 @@ export const mutations = {
   },
   set_searchDialog(store, value) {
     store.searchDialog = value;
+  },
+  set_usersList(store, value){
+    store.usersList = value
   },
   addCategory(store, {_id, name, enName}) {
     store.categories.push({_id,name,enName});
@@ -122,7 +129,16 @@ export const actions = {
         return Promise.reject(new Error("cant get categories"));
       });
   },
-
+  getUsers({dispatch, commit}){
+    return api.users
+    .getAllUsers()
+    .then(users => {
+      commit("set_usersList", users.data);
+    })
+    .catch(err => {
+      return Promise.reject(new Error("cant get users"));
+    });
+  },
   fetch({ dispatch, commit, state }) {
     // console.log(' Call TO FETCH' );
     return api.auth

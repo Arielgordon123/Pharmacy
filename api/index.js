@@ -17,5 +17,8 @@ export default {
     me: () => axios.get("/api/auth/user"),
     login: data => axios.post("/api/auth/login", data),
     register: data => axios.post("/api/auth/register", data)
+  },
+  users: {
+    getAllUsers: () => axios.get("/api/admin/users")
   }
 };

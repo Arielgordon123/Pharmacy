@@ -94,7 +94,7 @@ export default {
           this.loading = false;
           this.$store.dispatch("fetch").then(() => {
             // console.log('after fetch :', this.$route.query.redirect)
-            this.$router.push(this.$route.query.redirect || "/admin");
+            this.$router.push(this.$route.query.redirect || "/categories");
           });
         })
         .catch(error => {

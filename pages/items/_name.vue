@@ -11,7 +11,7 @@
         <!-- <v-btn @click="showItem(item)" class="btn-category" block>
           {{ item.name }}
         </v-btn> -->
-        <v-card @click="showItem(item)">
+        <v-card @click="showItem(item)" outlined style="border-color: red;">
           <v-img :src="item.imageUrl || ''">
             <v-card-text>
               {{ item.name }}

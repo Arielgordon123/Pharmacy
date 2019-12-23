@@ -1,5 +1,5 @@
 <template>
-  <v-card :to="'/items/'+cat.enName">
+  <v-card :to="'/items/'+cat.enName" outlined style="border-color: red;">
     <v-card-title>
       {{ cat.name }}
     </v-card-title>

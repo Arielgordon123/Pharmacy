@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app light>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -29,8 +29,8 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-card color="grey lighten-4" flat>
-      <v-app-bar :clipped-left="clipped" fixed app>
+    <v-card color="grey lighten-4" flat >
+      <v-app-bar :clipped-left="clipped" fixed app outlined style="border-color: red;">
         <v-app-bar-nav-icon aria-label="Menu" @click.stop="drawer = !drawer" />
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -139,7 +139,7 @@ export default {
       this.addDialog = false;
     },
      fillCategory() {
-       console.log('call to fill category:');
+      //  console.log('call to fill category:');
       if (this.$store.getters.get_categories.length == 0) {
 
         this.$store.dispatch("getAllCategories");

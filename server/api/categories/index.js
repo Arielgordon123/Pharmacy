@@ -22,14 +22,18 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   console.log("in route add new cat:", req.body.name);
-   const cat = new Category({
+  if ( res.locals.user.role == "admin") {
+    const cat = new Category({
       name: req.body.name,
       enName: req.body.enName
     });
 
     cat.save().then(category => {
-    res.status(201).json({ msg: "category created",item:category });
-  });
+      res.status(201).json({ msg: "category created", item: category });
+    });
+  }
+  else
+  res.status(403).json({ msg: "Forbidden request"});
 });
 
 module.exports = router;

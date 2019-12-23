@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <!-- <v-row>
       <v-col sm="12" md="3">
         <v-card to="/categories">
           <v-img
@@ -17,7 +17,10 @@
         </v-card>
       </v-col>
      
-    </v-row>
+    </v-row> -->
+
+    <h2>חיפוש מקטים</h2>
+    <p>חיפוש מוצר על פי מקט או על פי שם </p>
   </v-container>
 </template>
 
