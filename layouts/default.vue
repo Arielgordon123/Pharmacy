@@ -75,7 +75,10 @@
     </v-content>
 
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+      <div style="width: -webkit-fill-available; margin: 0;">
+   <p  class="text-center">Ariel Gordon Neria Cohen Liraz Yaacov &copy; 2019</p>
+      </div>
+   
     </v-footer>
   </v-app>
 </template>
@@ -107,7 +110,13 @@ export default {
           icon: "mdi-apps",
           title: "קטגוריות",
           to: "/categories"
-        }
+        },
+         {
+          icon: "mdi-message-processing",
+          title: "צור קשר",
+          to: "/contactUs"
+        },
+
         // {
         //   icon: "mdi-chart-bubble",
         //   title: "Inspire",
