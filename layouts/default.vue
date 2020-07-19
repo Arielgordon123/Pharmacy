@@ -34,7 +34,7 @@
         <v-app-bar-nav-icon aria-label="Menu" @click.stop="drawer = !drawer" />
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <div class="search-box" v-if="search">
+        <div class="search-box" v-if="search && this.$store.state.user">
           <!-- <v-text-field
             label="Solo"
             v-model="searchText"
@@ -42,7 +42,7 @@
             width="10rm"
             @blur="search = false"
           ></v-text-field> -->
-          <search v-if="this.$store.state.user" v-model="search"/>
+          <search v-model="search"/>
         </div>
         <v-btn icon @click="openSearch" aria-label="Search" v-else>
           <v-icon>mdi-magnify</v-icon>
