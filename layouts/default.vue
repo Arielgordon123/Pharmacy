@@ -42,7 +42,7 @@
             width="10rm"
             @blur="search = false"
           ></v-text-field> -->
-          <search v-model="search"/>
+          <search v-if="this.$store.state.user" v-model="search"/>
         </div>
         <v-btn icon @click="openSearch" aria-label="Search" v-else>
           <v-icon>mdi-magnify</v-icon>
@@ -78,7 +78,7 @@
       <div style="width: -webkit-fill-available; ">
    <p  class="text-center" style="margin: 0;">Ariel Gordon Neria Cohen Liraz Yaacov &copy; 2019</p>
       </div>
-   
+
     </v-footer>
   </v-app>
 </template>
@@ -138,7 +138,7 @@ export default {
     },
     editItem(item) {
       this.method = "edit";
-      
+
       this.itemToEdit = item;
       this.addDialog = true;
     },
