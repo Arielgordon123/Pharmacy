@@ -76,7 +76,7 @@
 
     <v-footer :fixed="fixed" app>
       <div style="width: -webkit-fill-available; ">
-   <p  class="text-center" style="margin: 0;">Ariel Gordon Neria Cohen Liraz Yaacov &copy; 2019</p>
+   <p  class="text-center" style="margin: 0;">Ariel Gordon &copy; 2021</p>
       </div>
    
     </v-footer>
